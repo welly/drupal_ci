@@ -132,10 +132,6 @@ RUN COMPOSER_MEMORY_LIMIT=-1 COMPOSER_ALLOW_SUPERUSER=1 \
   composer clear-cache
 
 #==================
-# Include testing code.
-COPY --chown=www-data:www-data ./tests/ /tests/
-
-#==================
 # Manage final tasks.
 RUN chmod 777 /var/www ; \
   chown -R www-data:www-data /var/www ; \
@@ -143,8 +139,6 @@ RUN chmod 777 /var/www ; \
   ln -sf /var/www/.composer/vendor/bin/* /usr/local/bin ; \
   # Phpunit 9+ cache.
   chown www-data:www-data /opt/drupal/web/core ; \
-  # Tests scripts.
-  chmod +x /tests/*.sh ; \
   # Fix Php performances.
   mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini ; \
   sed -i "s#memory_limit = 128M#memory_limit = 4G#g" /usr/local/etc/php/php.ini ; \
